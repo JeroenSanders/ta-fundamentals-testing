@@ -11,7 +11,7 @@ function doCalculation(operator, a, b) {
 }
 
 function isItWorkingTime() {
-    const hours = Date.now().getHours();
+    const hours = (new Date()).getHours();
     return hours >= 10 && hours <= 12;
 }
 
@@ -19,7 +19,7 @@ export default class LazyCalculator {
 
     forceCalculate(operator, a, b) {
         console.log(`I was forced to calculate ${a} ${operator} ${b} :'(`);
-        doCalculation(operator, a, b);
+        return doCalculation(operator, a, b);
     }
 
     nicelyCalculate(operator, a, b) {
