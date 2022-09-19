@@ -1,8 +1,12 @@
 package be.ae.testing.lab_3;
 
-import java.time.LocalDateTime;
-
 public class LazyCalculator {
+
+    private final WorkingTimeService workingTimeService;
+
+    public LazyCalculator(WorkingTimeService workingTimeService) {
+        this.workingTimeService = workingTimeService;
+    }
 
     public int forceCalculate(String operator, int a, int b) {
         System.out.println("I was forced to calculate " + a + " " + operator + " " + b);
@@ -10,14 +14,14 @@ public class LazyCalculator {
     }
 
     public int nicelyCalculate(String operator, int a, int b) {
-        if (!isItWorkingTime()) {
+        if (!workingTimeService.isItWorkingTime()) {
             throw new IllegalStateException("I don't want to work right now!");
         }
         return doCalculation(operator, a, b);
     }
 
     private int doCalculation(String operator, int a, int b) {
-        switch(operator) {
+        switch (operator) {
             case "+":
                 return (a + b) % 7;
             case "*":
@@ -26,10 +30,5 @@ public class LazyCalculator {
             default:
                 return 42;
         }
-    }
-
-    private boolean isItWorkingTime() {
-        int hours = LocalDateTime.now().getHour();
-        return hours >= 10 && hours <= 12;
     }
 }
